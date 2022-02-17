@@ -14,7 +14,7 @@ Aktuálně (k 17.2.2022) nelze [DZS registr](http://registr.dzs.cz/dotaz.nsf) do
 
 ## Žádanky testů COVID-19
 
-- Při vystavování žádanky provádí kontrolu kmenového čísla
+- Při vystavování žádanky provádí kontrolu pomocí kmenového čísla a data narození.
 
 ![Preview](preview/nahled.png)
 
