@@ -1,5 +1,7 @@
 # PRO OC DZS
 
+[Rozšíření do Mozilla Firefox](https://addons.mozilla.org/addon/pro-oc-dzs/)
+
 Rozšíření přidává užitečné funkce za pomoci [DZS registru](http://registr.dzs.cz/dotaz.nsf) do modulu [Pacienti COVID-19](https://ereg.ksrzis.cz/Registr/CUDZadanky/VyhledaniPacienta) a [Žádanky testů COVID-19](https://eregpublicsecure.ksrzis.cz/Registr/CUD/Overeni) s cílem usnadnit práci s těmito systémy.
 
 ## Zásady ochrany osobních údajů
