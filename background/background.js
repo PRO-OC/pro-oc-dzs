@@ -13,6 +13,8 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
     if (msg.text === 'OveritStatusStipendisty' && msg.data.KmenoveCislo && msg.data.DatumNarozeni) {
         OveritStatusStipendisty(msg.data.KmenoveCislo, msg.data.DatumNarozeni, function(responseOveritStatusStipendisty) {
             sendResponse(responseOveritStatusStipendisty);
+        }, function() {
+            sendResponse(false);
         });
         return true;
     }
@@ -21,6 +23,7 @@ chrome.runtime.onMessage.addListener(function (msg, sender, sendResponse) {
 function getDZSRegistrPage() {
     return "/dotaz.nsf";
 }
+
 function getDZSRegistrUrlParams(KmenoveCislo, dD, dM, dR) {
     var urlParams = new URLSearchParams();
     urlParams.set("kdo", KmenoveCislo);
@@ -30,7 +33,7 @@ function getDZSRegistrUrlParams(KmenoveCislo, dD, dM, dR) {
     return urlParams;
 }
 
-function OveritStatusStipendisty(KmenoveCislo, DatumNarozeni, onSuccess) {
+function OveritStatusStipendisty(KmenoveCislo, DatumNarozeni, onSuccess, onError) {
     getOptionsFromLocalStorage(function(optionsURLSearchParams) {
 
         var options = new URLSearchParams(optionsURLSearchParams);
@@ -52,14 +55,27 @@ function OveritStatusStipendisty(KmenoveCislo, DatumNarozeni, onSuccess) {
 
         var urlParams = getDZSRegistrUrlParams(KmenoveCislo, dD, dM, dR);
 
-        var xmlhttp = new XMLHttpRequest();
-        xmlhttp.open('GET', url + "?" + urlParams.toString(), true);
-        xmlhttp.onreadystatechange = function () {
-            if(xmlhttp.readyState === XMLHttpRequest.DONE && xmlhttp.status == 200) {  
+        fetch(url + "?" + urlParams.toString(), {
+            method: 'get'
+        })
+        .then(function (response) {
+            if (response.status == 200) {
+                try {
+                    response.text().then(function(responseText) {
 
-                onSuccess(xmlhttp.responseText);
+                        onSuccess(responseText);
+                    });
+                } catch(err) {
+                    console.log(err)
+                    onError();
+                }
+            } else {
+                onError();
             }
-        }
-        xmlhttp.send();
+        })
+        .catch(function (error) {
+            console.log(error);
+            onError();
+        });
     });
 }

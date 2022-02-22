@@ -97,7 +97,9 @@ function VysledekKontrolyStipendistaText() {
                 }
             }, function(VysledekKontroly) {
 
-                if(VysledekKontroly.includes("samoplátce")) {
+                if(!VysledekKontroly) {
+                    VysledekKontroly = "Nebylo možné ověřit. Problém na straně zprostředkovatele ověření nebo poskytovatele ověření DZS (Dům zahraniční spolupráce).";
+                } else if(VysledekKontroly.includes("samoplátce")) {
                     alert("Nepojištěn");
                 } else if(VysledekKontroly.includes("hradí MZČR")) {
                    // nothing

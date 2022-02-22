@@ -19,3 +19,5 @@ Aktuálně (k 17.2.2022) nelze [DZS registr](http://registr.dzs.cz/dotaz.nsf) do
 ![Preview](preview/nahled.png)
 
 ![Preview](preview/nahled_2.png)
+
+![Preview](preview/nebylo_mozne_overit.png)
