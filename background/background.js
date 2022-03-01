@@ -1,3 +1,5 @@
+importScripts("./../lib/crypto-js.min.js");
+
 // Duplikované v background/background.js
 const chromeLocalStorageOptionsNamespace = "pro-oc-dzs-options";
 
@@ -39,8 +41,8 @@ function OveritStatusStipendisty(KmenoveCislo, DatumNarozeni, onSuccess, onError
         var options = new URLSearchParams(optionsURLSearchParams);
         var DZSServerUrlFromOptions = options.get("DZSServerUrl");
         var DZSServerUrl = DZSServerUrlFromOptions ? DZSServerUrlFromOptions : DEFAULT_DZS_PROD_SERVER_URL;
-
-        var url = DZSServerUrl + getDZSRegistrPage();
+        var EncryptingDisabled = options.get("EncryptingDisabled") == "true" ? true : false;
+        var EncryptingPassword = options.get("EncryptingPassword");
 
         const dD = DatumNarozeni.split(".")[0];
         const dM = DatumNarozeni.split(".")[1];
@@ -55,7 +57,9 @@ function OveritStatusStipendisty(KmenoveCislo, DatumNarozeni, onSuccess, onError
 
         var urlParams = getDZSRegistrUrlParams(KmenoveCislo, dD, dM, dR);
 
-        fetch(url + "?" + urlParams.toString(), {
+        var url = DZSServerUrl + getDZSRegistrPage() + "?" + urlParams.toString();
+
+        fetch(url, {
             method: 'get'
         })
         .then(function (response) {
@@ -63,7 +67,9 @@ function OveritStatusStipendisty(KmenoveCislo, DatumNarozeni, onSuccess, onError
                 try {
                     response.text().then(function(responseText) {
 
-                        onSuccess(responseText);
+                        var text = getResponseBody(EncryptingDisabled, responseText, EncryptingPassword);
+
+                        onSuccess(text);
                     });
                 } catch(err) {
                     console.log(err)
@@ -78,4 +84,14 @@ function OveritStatusStipendisty(KmenoveCislo, DatumNarozeni, onSuccess, onError
             onError();
         });
     });
+}
+
+function decryptBody(body, key) {
+    let decData = CryptoJS.enc.Base64.parse(body).toString(CryptoJS.enc.Utf8);
+    let bytes = CryptoJS.AES.decrypt(decData, key).toString(CryptoJS.enc.Utf8);
+    return JSON.parse(bytes).body;
+}
+
+function getResponseBody(EncryptingDisabled, body, key) {
+    return !EncryptingDisabled ? decryptBody(body, key) : body;
 }

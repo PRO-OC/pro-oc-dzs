@@ -10,7 +10,12 @@ Osobní informace pacientů podmíněné přihlášením do modulu [Pacienti COV
 
 ## Použití
 
-Aktuálně (k 17.2.2022) nelze [DZS registr](http://registr.dzs.cz/dotaz.nsf) dotazovat automatizovaně pouze skrze prohlížeč. Je zapotřebí zadat do nastavení vlastní proxy server, který dotaz zproztředkuje, např. [PRO OC DZS Proxy](https://github.com/PRO-OC/pro-oc-vzp-b2b-cors-proxy).
+Aktuálně (k 17.2.2022) nelze [DZS registr](http://registr.dzs.cz/dotaz.nsf) dotazovat automatizovaně pouze skrze prohlížeč. Je zapotřebí zadat do nastavení vlastní proxy server, který dotaz zproztředkuje, např. [PRO OC DZS Proxy](https://github.com/PRO-OC/pro-oc-vzp-b2b-cors-proxy).Defaultně se body požadavky šifrují pomocí AES knihovnou [crypto-js](https://github.com/brix/crypto-js). Toto šifrování lze vypnout v nastavení.
+
+## Změny pro Mozilla Firefox
+
+- Použití manifest souboru s verzí 2 ```manifest.v2.json```
+- Odstranění řádku ```importScript("./../lib/crypto-js.min.js");``` ze souboru ```background/background.js``` 
 
 ## Žádanky testů COVID-19
 

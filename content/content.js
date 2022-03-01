@@ -60,7 +60,7 @@ function getKmenoveCisloDivElement(idContainerDiv, idInput) {
         });
         KmenoveCisloDivElement.appendChild(input);
     } else {
-        KmenoveCisloDivElement.style.display = "block";
+        KmenoveCisloDivElement.setAttribute("style", "display: block;");
     }
     return KmenoveCisloDivElement;
 }
@@ -80,6 +80,8 @@ function VysledekKontrolyStipendistaText() {
         if(!KmenoveCisloDivElement) {
             KmenoveCisloDivElement = getKmenoveCisloDivElement(KmenoveCisloDivElementId, KmenoveCisloElementId);
             ZdravotniPojistovnaKod.parentNode.parentNode.insertBefore(KmenoveCisloDivElement, ZdravotniPojistovnaKod.parentNode.nextSibling);
+        } else {
+            KmenoveCisloDivElement = getKmenoveCisloDivElement(KmenoveCisloDivElementId, KmenoveCisloElementId);
         }
 
         var KmenoveCisloElement = document.getElementById(KmenoveCisloElementId);
